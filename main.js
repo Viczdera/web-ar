@@ -1,9 +1,13 @@
-const THREE = window.MINDAR.IMAGE.THREE;
+// const THREE = window.MINDAR.IMAGE.THREE;
+import * as THREE from "three"
+import {MindARThree} from "mindar-image-three"
+import {mockWithVideo} from "./libs/camera-mock.js"
 document.addEventListener("DOMContentLoaded", () => {
   async function start() {
-    const mindarThree = new window.MINDAR.IMAGE.MindARThree({
+    mockWithVideo("./assets/mock-vid/course-banner1.mp4")
+    const mindarThree = new MindARThree({
       container: document.body,
-      imageTargetSrc: "./assets/targets/card.mind",
+      imageTargetSrc: "./assets/targets/course-banner.mind",
     });
     //three init
     const { renderer, scene, camera } = mindarThree;
@@ -12,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const material = new THREE.MeshBasicMaterial({
       color: "#ffffff",
       transparent: true,
-      opacity: 1,
+      opacity: 0.4,
     });
     const plane = new THREE.Mesh(geometry, material);
 
