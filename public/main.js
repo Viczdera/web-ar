@@ -1,12 +1,10 @@
-// const THREE = window.MINDAR.IMAGE.THREE;
 import * as THREE from "three";
-import { MindARThree } from "mindar-image-three";
+// import { MindARThree } from "./libs/mindar/mindar-image-three.prod.js";
 import { loadGLTF } from "./libs/loader.js";
-
 document.addEventListener("DOMContentLoaded", () => {
   async function start() {
-   // mockWithVideo("./assets/mock-vid/course-banner1.mp4");
-    const mindarThree = new MindARThree({
+    // mockWithVideo("./assets/mock-vid/course-banner1.mp4");
+    const mindarThree = new window.MINDAR.IMAGE.MindARThree({
       container: document.body,
       imageTargetSrc: "./assets/targets/card.mind",
     });
@@ -28,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const anchor = mindarThree.addAnchor(0);
 
     //load 3d model then add scene to anchor group
-    const gltf =await loadGLTF("./assets/models/musicband-raccoon/scene.gltf")
+    const gltf = await loadGLTF("./assets/models/musicband-raccoon/scene.gltf");
     gltf.scene.scale.set(0.1, 0.1, 0.1);
     gltf.scene.position.set(0, -0.5, 0);
     //three group
