@@ -1,7 +1,6 @@
 // const THREE = window.MINDAR.IMAGE.THREE;
 import * as THREE from "three";
 import { MindARThree } from "mindar-image-three";
-import { mockWithVideo } from "./libs/camera-mock.js";
 import { loadGLTF } from "./libs/loader.js";
 
 document.addEventListener("DOMContentLoaded", () => {
