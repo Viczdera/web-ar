@@ -1,10 +1,11 @@
 import * as THREE from "three";
-// import { MindARThree } from "./libs/mindar/mindar-image-three.prod.js";
-import { loadGLTF } from "./libs/loader.js";
+import { MindARThree } from "mindar-image-three";
+import { loadGLTF } from "./libs/loader.js"
+
 document.addEventListener("DOMContentLoaded", () => {
   async function start() {
     // mockWithVideo("./assets/mock-vid/course-banner1.mp4");
-    const mindarThree = new window.MINDAR.IMAGE.MindARThree({
+    const mindarThree = new MindARThree({
       container: document.body,
       imageTargetSrc: "./assets/targets/card.mind",
     });
