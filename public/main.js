@@ -49,7 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
     audio.setRefDistance(100)
     audio.setBuffer(audioClip)
     audio.setLoop(true)
-    audio.setVolume(4)
     audio.setMaxDistance (200)
 
     //three group
