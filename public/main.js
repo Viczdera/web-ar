@@ -29,7 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
     //load 3d model then add scene to anchor group
     const gltf = await loadGLTF("./assets/models/musicband-raccoon/scene.gltf");
     gltf.scene.scale.set(0.1, 0.1, 0.1);
-    gltf.scene.position.set(0, -0.5, 0);
+    gltf.scene.position.set(0, -0.3, 0);
+    //gltf.scene.rotation.x = Math.PI / 2;
 
     //gltf animation
     const mixer=new THREE.AnimationMixer(gltf.scene)
@@ -48,7 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
     audio.setRefDistance(100)
     audio.setBuffer(audioClip)
     audio.setLoop(true)
-    audio.setVolume(50)
+    audio.setVolume(4)
+    audio.setMaxDistance (200)
 
     //three group
     anchor.group.add(gltf.scene);
