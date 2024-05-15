@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const gltf = await loadGLTF("./assets/models/musicband-raccoon/scene.gltf");
     gltf.scene.scale.set(0.1, 0.1, 0.1);
     gltf.scene.position.set(0, -0.3, 0);
-    //gltf.scene.rotation.x = Math.PI / 2;
+    gltf.scene.rotation.x = Math.PI / 2;
 
     //gltf animation
     const mixer=new THREE.AnimationMixer(gltf.scene)
