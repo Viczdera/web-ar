@@ -9,73 +9,70 @@ document.addEventListener("DOMContentLoaded", () => {
       container: document.body,
       imageTargetSrc: "./assets/targets/card.mind",
     });
-    //three init
     const { renderer, scene, camera } = mindarThree;
-
-    // const geometry = new THREE.PlaneGeometry(1, 1);
-    // const material = new THREE.MeshBasicMaterial({
-    //   color: "#ffffff",
-    //   transparent: true,
-    //   opacity: 0.4,
-    // });
-    // const plane = new THREE.Mesh(geometry, material);
 
     const light = new THREE.HemisphereLight(0xffffff, 0x000000, 1);
     scene.add(light);
 
-    //anchor
     const anchor = mindarThree.addAnchor(0);
 
-    //load 3d model then add scene to anchor group
     const gltf = await loadGLTF("./assets/models/musicband-raccoon/scene.gltf");
     gltf.scene.scale.set(0.1, 0.1, 0.1);
     gltf.scene.position.set(0, -0.3, 0);
     gltf.scene.rotation.x = Math.PI / 2;
 
-    //gltf animation
-    const mixer=new THREE.AnimationMixer(gltf.scene)
-    const action=mixer.clipAction(gltf.animations[0])
-    //audio
+    const mixer = new THREE.AnimationMixer(gltf.scene);
+    const action = mixer.clipAction(gltf.animations[0]);
+
     const audioClip = await loadAudio("./assets/audio/90s-tv-theme.mp3");
     const listener = new THREE.AudioListener();
     const audio = new THREE.PositionalAudio(listener);
 
-    
-
-    //camera
     camera.add(listener);
-    //we want to position our ears to camera to mimic distance from sound(staging effect)
-    //set ref distance
-    audio.setRefDistance(100)
-    audio.setBuffer(audioClip)
-    audio.setLoop(true)
-    audio.setMaxDistance (200)
+    audio.setRefDistance(10); 
+    audio.setBuffer(audioClip);
+    audio.setLoop(true);
+    audio.setMaxDistance(50); 
+    audio.setVolume(1); 
 
-    //three group
     anchor.group.add(gltf.scene);
     anchor.group.add(audio);
 
-
     anchor.onTargetFound = () => {
       console.log("found");
-      action.play()
-      audio.play()
+      action.play();
+      audio.play();
     };
+
     anchor.onTargetLost = () => {
       console.log("not found");
-      action.stop()
-      audio.pause()
+      action.stop();
+      audio.pause();
     };
 
-    //manage mixer time
-    const clock=new THREE.Clock()
+    const clock = new THREE.Clock();
 
     await mindarThree.start();
+
+    // Stabilize model by damping its movements
+    const previousPosition = new THREE.Vector3();
+    const previousQuaternion = new THREE.Quaternion();
+    const smoothingFactor = 0.1; // Adjust this value for desired smoothness
+
     renderer.setAnimationLoop(() => {
-      //update animation
-      mixer.update(clock.getDelta())
+      const delta = clock.getDelta();
+      mixer.update(delta);
+
+      // Smooth position and rotation
+      gltf.scene.position.lerp(previousPosition, smoothingFactor);
+      gltf.scene.quaternion.slerp(previousQuaternion, smoothingFactor);
+
+      previousPosition.copy(gltf.scene.position);
+      previousQuaternion.copy(gltf.scene.quaternion);
+
       renderer.render(scene, camera);
     });
   }
+
   start();
 });
