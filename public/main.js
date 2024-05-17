@@ -29,11 +29,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const audio = new THREE.PositionalAudio(listener);
 
     camera.add(listener);
-    audio.setRefDistance(10); 
+    audio.setRefDistance(100); 
     audio.setBuffer(audioClip);
     audio.setLoop(true);
-    audio.setMaxDistance(50); 
-    audio.setVolume(1); 
+    audio.setMaxDistance(200); 
+    audio.setVolume(100); 
 
     anchor.group.add(gltf.scene);
     anchor.group.add(audio);
